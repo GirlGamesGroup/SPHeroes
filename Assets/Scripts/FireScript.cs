@@ -23,12 +23,12 @@ public class FireScript : MonoBehaviour {
 
 	private SpriteRenderer spriteRenderer;
 
-	private Text DebugText;
+
 
 	void Awake(){
 		WS = GameObject.FindGameObjectWithTag("WindowController").GetComponent<WindowScript> ();
 		GCS = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameControllerScript> ();
-		DebugText =  GameObject.FindGameObjectWithTag ("DebugTXT").GetComponent<Text>();
+
 		spriteRenderer = GetComponent<SpriteRenderer>();
 		spriteRenderer.sprite = fire1;
 	}
@@ -65,10 +65,17 @@ public class FireScript : MonoBehaviour {
 			yield return new WaitForSeconds(timeBetweenStates);
 		}
 
-		WS.ChangeWindow (currentPos);
-		GCS.AddDeadWindow ();
-		Destroy(gameObject);
+		if (StateOfFire == 3) {
+			StateOfFire = 4;
+			yield return new WaitForSeconds(0.5f);
+		}
 
+		if (StateOfFire == 4) {
+			WS.ChangeWindow (currentPos);
+			GCS.AddDeadWindow ();
+			Destroy(gameObject);
+		}
+			
 	}
 
 	void OnTriggerStay(Collider other) {
@@ -93,7 +100,7 @@ public class FireScript : MonoBehaviour {
 	}
 
 	void Update(){
-		if (GCS.getGameover ()) {
+		if (GCS.getGameover () || GCS.getGameWon()) {
 			Destroy(gameObject);
 		}
 	}

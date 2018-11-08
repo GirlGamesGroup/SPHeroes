@@ -10,7 +10,7 @@ public class ClientScript : MonoBehaviour {
 	static NetworkClient Cliente;
 	string IPServer;
 	[SerializeField] Text InputText;
-	[SerializeField] Text DEBUGTXT;
+
 
 	string GameState;
 	// Use this for initialization
@@ -35,11 +35,11 @@ public class ClientScript : MonoBehaviour {
 	}
 
 	public void Conectar(){
-		DEBUGTXT.text  ="CONECTAaa";
-//		IPServer = InputText.text;
+
+		IPServer = InputText.text;
 
 		//MANUAL INPUT
-		IPServer = "192.168.0.40";
+//		IPServer = "192.168.0.40";
 		Cliente.Connect (IPServer, 25000);
 		Cliente.RegisterHandler (1, WaitForMessage);
 
