@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FireScript : MonoBehaviour {
 	private FireSpawner FS;
@@ -22,9 +23,12 @@ public class FireScript : MonoBehaviour {
 
 	private SpriteRenderer spriteRenderer;
 
+	private Text DebugText;
+
 	void Awake(){
 		WS = GameObject.FindGameObjectWithTag("WindowController").GetComponent<WindowScript> ();
 		GCS = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameControllerScript> ();
+		DebugText =  GameObject.FindGameObjectWithTag ("DebugTXT").GetComponent<Text>();
 		spriteRenderer = GetComponent<SpriteRenderer>();
 		spriteRenderer.sprite = fire1;
 	}
@@ -68,21 +72,30 @@ public class FireScript : MonoBehaviour {
 	}
 
 	void OnTriggerStay(Collider other) {
-		Debug.Log (currentPos);
-		if (!isShooting) {
+
 //			//		WORKS WITH KEYBOARD
 //			if (Input.GetKeyDown (KeyCode.L)) {
 //				isShooting = true;
 //				ExtinguishFire ();
 //			}
-
-					if (GCS.getPressedButton() == "L") {
-						Debug.Log ("shoot");
-						ExtinguishFire ();
-					}
+		//SECOND VERSION, SHOOTING WAY TOO MUCH
+//		if (isShooting)
+//			return;
+//					if (GCS.getPressedButton() == "L") {
+//						StartCoroutine (CooldownBoton ());
+//						Debug.Log ("shoot");
+//						ExtinguishFire ();
+//					}
+		if(GCS.isShooting){
+			ExtinguishFire ();
 		}
 
+	}
 
+	void Update(){
+		if (GCS.getGameover ()) {
+			Destroy(gameObject);
+		}
 	}
 
 

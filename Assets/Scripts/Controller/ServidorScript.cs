@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class ServidorScript : MonoBehaviour {
 	string IPServidor;
 	[SerializeField] Text IPTextoEnPantalla;
-	[SerializeField] Text DebugTxt;
+
 	[SerializeField] GameControllerScript GCS;
 	static NetworkClient Cliente;
 	[SerializeField] MovementControllerScript MCS;
@@ -37,10 +37,29 @@ public class ServidorScript : MonoBehaviour {
 		StringMessage msg = new StringMessage ();
 		msg.value = message.ReadMessage<StringMessage> ().value;
 		GCS.SetPressedButton (msg.value);
+		//SEND MOVEMENT
 		MCS.Move ();
-		DebugTxt.text = msg.value;
+		//SEND SHOOT
+		if (msg.value == "L") {
+			GCS.isShooting = true;
+		}
+			
+//		if (GCS.getGameover ()) {
+//			if (msg.value == "C") {
+//				GCS.isShooting = true;
+//			}
+//			//RESTART GAME
+//		}
+//
+//		if (GCS.getGameWon ()) {
+//			if (msg.value == "Z") {
+//				GCS.isShooting = true;
+//			}
+		}
 
-	}
+
+
+
 
 	public void TellGameStatus(string status){
 		if (NetworkServer.connections.Count > 0) {
@@ -53,7 +72,6 @@ public class ServidorScript : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		Debug.Log (CuantasVecesRecibe);
-//		DebugTxt.text = NetworkServer.connections.Count.ToString();
+				
 	}
 }

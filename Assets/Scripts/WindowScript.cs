@@ -9,16 +9,21 @@ public class WindowScript : MonoBehaviour {
 	[SerializeField] protected SpriteRenderer[] spriteRenderers;
 
 	void Awake(){
-
-		foreach (SpriteRenderer SR in spriteRenderers)
-		{
-			SR.sprite = window1;
-		}
+		ActivateWindows ();
 	}
 
 	public void ChangeWindow(int position){
 		spriteRenderers [position].sprite = window2;
 	}
 
+	void OnEnable(){
+		ActivateWindows ();
+	}
 
+	private void ActivateWindows(){
+		foreach (SpriteRenderer SR in spriteRenderers)
+		{
+			SR.sprite = window1;
+		}
+	}
 }

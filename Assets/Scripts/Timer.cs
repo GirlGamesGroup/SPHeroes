@@ -37,6 +37,7 @@ public class Timer : MonoBehaviour {
 
 	void TimeOver(){
 		GCS.setWon ();
+		GCS.HasWonGame ();
 	}
 
 	// 2MINUTES: 100/120

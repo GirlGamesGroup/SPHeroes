@@ -10,7 +10,7 @@ public class GameControllerScript : MonoBehaviour {
 	private bool tempBool;
 	private bool tempBool2;
 	private string PressedButton;
-
+	[SerializeField] Text DebugTxt;
 
 	//IMPORTANT
 	[SerializeField] protected ServidorScript SC;
@@ -24,6 +24,8 @@ public class GameControllerScript : MonoBehaviour {
 	[SerializeField] protected GameObject WinScreen;
 
 	private string CurrentStateOfGame;
+
+	public bool isShooting;
 
 	// Use this for initialization
 	void Start () {
@@ -51,6 +53,9 @@ public class GameControllerScript : MonoBehaviour {
 	}
 
 	private void IsPlayingGame(){
+		GameOver = false;
+		GameWon = false;
+		DeadWindows = 0;
 		CurrentStateOfGame = "Playing";
 		MainScreen.SetActive(false);
 		LoseScreen.SetActive(false);
@@ -69,7 +74,7 @@ public class GameControllerScript : MonoBehaviour {
 		GameScreen.SetActive (false);
 	}
 
-	private void HasWonGame(){
+public void HasWonGame(){
 //		SC.TellGameStatus ("W");
 //
 		CurrentStateOfGame = "Won";
@@ -93,10 +98,12 @@ public class GameControllerScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
-		if (DeadWindows == 3 && !GameOver) {
+//
+//		DebugTxt.txt;
+		if (DeadWindows == 2 && !GameOver) {
 			Debug.Log ("PERDISTE");
 			GameOver = true;
+			HasLostGame ();
 		}
 
 
@@ -105,21 +112,29 @@ public class GameControllerScript : MonoBehaviour {
 			IsPlayingGame ();
 		}
 
-		if (CurrentStateOfGame == "Playing" && GameOver) {
-			HasLostGame ();
-		}
-
-		if (CurrentStateOfGame == "Playing" && GameWon) {
-			HasWonGame ();
-		}
-
-		if (CurrentStateOfGame == "Lost" && getPressedButton() == "X") {
+		if (GameOver && getPressedButton() == "C") {
 			IsPlayingGame ();
 		}
 
-		if (CurrentStateOfGame == "Won" && getPressedButton() == "Z") {
+		if (GameWon && getPressedButton() == "Z") {
 			IsShowingMainScreen ();
 		}
+
+//		if (CurrentStateOfGame == "Playing" && GameOver) {
+//			HasLostGame ();
+//		}
+//
+//		if (CurrentStateOfGame == "Playing" && GameWon) {
+//			HasWonGame ();
+//		}
+//
+//
+//
+//		if (CurrentStateOfGame == "Won" && getPressedButton() == "Z") {
+//			IsShowingMainScreen ();
+//		}
+
+		isShooting = false;
 	}
 
 	public void AddDeadWindow(){
@@ -127,6 +142,9 @@ public class GameControllerScript : MonoBehaviour {
 		Debug.Log("WINDOW DIED");
 	}
 
+	private void ShootOnce (){
+		isShooting = true;
+	}
 //	private void LoseGame(){
 //		FireSpawnerObject.SetActive (false);
 //		MovementObject.SetActive (false);
@@ -140,4 +158,12 @@ public class GameControllerScript : MonoBehaviour {
 //		WindowControllerObject.SetActive (false);
 //			Timer.SetActive (false);
 //	}
+
+	public bool getGameover(){
+		return GameOver;
+	}
+
+	public bool getGameWon(){
+		return GameWon;
+	}
 }

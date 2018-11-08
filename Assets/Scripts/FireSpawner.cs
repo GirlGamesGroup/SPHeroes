@@ -15,6 +15,26 @@ public class FireSpawner : MonoBehaviour {
 	void Start () {
 
 
+//		posVect = new Vector3[9];
+//		hasFire = new bool[9];
+//		CreatedAFire = false;
+//		posVect [0] = new Vector3 (-3.8877f,0.6329f , 0f);
+//		posVect [1] = new Vector3 (-3.675f, 0.6329f, 0f);
+//		posVect [2] = new Vector3 (-3.465f, 0.6329f, 0f);
+//		posVect [3] = new Vector3 (-3.8877f, 0.242f, 0f);
+//		posVect [4] = new Vector3 (-3.675f, 0.242f, 0f);
+//		posVect [5] = new Vector3 (-3.465f, 0.242f, 0f);
+//		posVect [6] = new Vector3 (-3.8877f, -0.148f, 0f);
+//		posVect [7] = new Vector3 (-3.675f, -0.148f, 0f);
+//		posVect [8] = new Vector3 (-3.465f, -0.148f, 0f);
+//
+//		for (int i = 0; i < 9; i++) {
+//			hasFire [i] = false;
+//		}
+//		InvokeRepeating ("SpawnFire", 1, PeriodOf);
+	}
+
+	private void OnEnable () {
 		posVect = new Vector3[9];
 		hasFire = new bool[9];
 		CreatedAFire = false;
@@ -31,10 +51,6 @@ public class FireSpawner : MonoBehaviour {
 		for (int i = 0; i < 9; i++) {
 			hasFire [i] = false;
 		}
-	}
-
-	private void OnEnable () {
-		
 		InvokeRepeating ("SpawnFire", 1, PeriodOf);
 	}
 
